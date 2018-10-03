@@ -46,7 +46,7 @@ create_instructions <- function(model_name = NULL) {
   meta_data = tibble(model_name = model_name)
   meta_data = toJSON(meta_data, pretty = TRUE) %>% as.character()
   write.table(meta_data,
-              paste0(model_name, "instructions.txt"),
+              paste0("instructions.txt"),
               row.names = FALSE,
               col.names = FALSE,
               quote = FALSE)
@@ -55,7 +55,7 @@ create_instructions <- function(model_name = NULL) {
 #' @export send_instructions
 send_instructions <- function(model_name) {
 
-  file_path = paste0(model_name, "_send/instructions.txt")
+  file_path = paste0("instructions.txt")
 
   bash_query = paste0('aws s3 cp ',file_path,' s3://awscar/instructions.txt')
   system(bash_query)

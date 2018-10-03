@@ -7,5 +7,5 @@ modelname=$(cat instructions.txt | sed 's/[][]//g' | jq -r '.model_name' | cat)
 cd $modelname
 unzip $modelname'.zip'
 /usr/bin/Rscript /home/ubuntu/reboot.R
-
+/home/ubuntu/.local/bin/aws s3 cp $modelname'/'$modelname'_model.rda' 's3://awscar/'$modelname'_model.rda'
 

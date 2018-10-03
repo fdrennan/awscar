@@ -16,7 +16,7 @@ library(awscar)
 library(twilio)
 
 # Meta data
-model_name = "irissuccessful"
+model_name = "yaaaay"
 localhost  = "50.236.138.35"
 current_ip = get_ip()
 home       = current_ip == localhost
@@ -41,36 +41,40 @@ if(!home) {
 
 if(home) {
   # Do some pre-processing
-  sampleSplit = sample.split(iris, .7)
-  train = iris[sampleSplit,]
-  test = iris[-sampleSplit,]
+  sampleSplit = sample.split(mtcars$cyl, .7)
+  train = mtcars[sampleSplit,]
+  test = mtcars[-sampleSplit,]
   write_csv(train, 'train.csv')
   write_csv(test, 'test.csv')
-  
 
 }
 
-# Create the model formula
-modelForm = formula(Species ~ .)
-model     = "evtree"
 
 # Code to run server side.
 if(!home) {
+  
   get_it(model_name)
+  
   train = read_csv('train.csv')
   test  = read_csv('test.csv')
-  control <- trainControl(method="repeatedcv", number=2, repeats=1)
+  
+  # Create the model formula
+  modelForm = formula(cyl ~ .)
+  model     = "ranger"
+  
+  
+  control <- trainControl(method="repeatedcv", number=5, repeats=3)
   fit <- train(modelForm , data=train, method=model, trControl = control)
   # pred = predict(fit,  test)
   saveRDS(fit, paste0(model_name,"_model.rda"))
-  system(paste0("aws s3 cp ", model_name, "_model.rda", " s3://awscar/",model_name, "_model.rda"))
   
   if(!home) {
     # Now we can send away!
     tw_send_message(from = twilios_phone_number, 
                     to = my_phone_number, 
-                    body = paste0(model_name, " has been sent back!"))
+                    body = paste0(model_name, " finished processing!"))
   }
+  
   
 }
 
