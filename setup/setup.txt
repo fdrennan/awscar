@@ -1,0 +1,34 @@
+# Update Ubuntu 18
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/' -y
+sudo apt update -y
+sudo apt install r-base -y
+sudo apt  install jq -y
+
+sudo apt-get install libcurl4-openssl-dev -y
+sudo apt-get install libxml2-dev -y
+sudo apt-get install libssl-dev -y
+sudo apt-get install libssh2-1-dev -y
+
+sudo su - \
+-c "R -e \"install.packages('devtools', dependencies = TRUE)\""
+
+sudo su - \
+-c "R -e \"devtools::install_github('fdrennan/awscar')\""
+
+sudo apt install python-pip -y
+pip install awscli --upgrade --user
+vim .bashrc
+export PATH=~/.local/bin:$PATH # add to end of .bashrc file
+source ~/.bashrc
+
+# Set up AWS
+aws configure
+# AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+# AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+# Default region name [None]: us-east-2
+# Default output format [None]: json
+
+

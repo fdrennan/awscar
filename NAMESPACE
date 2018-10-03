@@ -1,0 +1,6 @@
+exportPattern("^[[:alpha:]]+")
+importFrom("utils", "unzip", "write.table", "zip")
+import(magrittr)
+import(tidyverse)
+import(tibble)
+importFrom("jsonlite", "fromJSON", "toJSON")
