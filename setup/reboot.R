@@ -1,5 +1,6 @@
 library(awscar)
+library(jsonlite)
 
 instructions = fromJSON("instructions.txt")
-
-get_it(instructions$model_name)
+setwd(instructions$model_name)
+system("/usr/bin/Rscript model.R")

@@ -39,11 +39,14 @@ test_file <- function(receive = TRUE) {
 
 #' @export create_instructions
 create_instructions <- function(model_name = NULL) {
-  dir.create(paste0(model_name, "_send"))
+  new_dir = paste0(model_name, "_send")
+  if(!dir.exists(new_dir)) {
+    dir.create(new_dir)
+  }
   meta_data = tibble(model_name = model_name)
   meta_data = toJSON(meta_data, pretty = TRUE) %>% as.character()
   write.table(meta_data,
-              paste0(model_name, "_send/", "instructions.txt"),
+              paste0(model_name, "instructions.txt"),
               row.names = FALSE,
               col.names = FALSE,
               quote = FALSE)

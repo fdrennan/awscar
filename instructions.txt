@@ -1,5 +1,0 @@
-[
-  {
-    "model_name": "caret_100"
-  }
-]
